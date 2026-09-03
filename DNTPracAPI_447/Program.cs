@@ -1,0 +1,56 @@
+using DAL.Entities;
+using Microsoft.EntityFrameworkCore;
+using Repository.Abstraction;
+using Repository.Implementation;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllers();
+builder.Services.AddControllers().AddXmlSerializerFormatters().AddJsonOptions(p =>
+{
+    //Camel casing is not enabled in c# model class
+    p.JsonSerializerOptions.PropertyNamingPolicy = null;
+});
+
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddTransient<IProductRepository, ProductRepository>();
+builder.Services.AddTransient<ICustom, Custom>();
+builder.Services.AddDbContext<AppDbContext>(option =>
+{
+    option.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"));
+});
+builder.Services.AddCors(policy =>
+{
+    policy.AddPolicy("myPolicy", option =>
+    {
+        option.AllowAnyOrigin();
+        option.AllowAnyHeader();
+        option.AllowAnyMethod();
+        //option.WithOrigins("https://localhost:7009");//for specific origin
+    });
+});
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+app.UseCors("myPolicy");
+
+app.UseAuthorization();
+
+
+app.MapControllers();
+
+app.Run();
