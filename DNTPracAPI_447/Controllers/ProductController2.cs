@@ -7,16 +7,16 @@ namespace DNTPracAPI_447.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController1 : ControllerBase
+    public class ProductController2 : ControllerBase
     {
         private readonly IProductRepository _productRepo;
 
-        public ProductController1(IProductRepository productRepo)
+        public ProductController2(IProductRepository productRepo)
         {
             _productRepo = productRepo;
         }
         [HttpGet]
-        [Route("ShowAllProducts")]
+        [Route("DisplayAllProducts")]
         [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
