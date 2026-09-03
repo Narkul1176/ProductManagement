@@ -17,6 +17,9 @@ namespace DNTPracAPI_447.Controllers
         }
         [HttpGet]
         [Route("DisplayAllProducts")]
+        ///This method retrieves all products from the repository and returns them as a response. 
+        ///It handles potential exceptions and returns appropriate HTTP status codes based on the outcome of the operation.
+        ///Created By : Raghav Created Date: 2026-07-03
         [ProducesResponseType(typeof(Product), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
