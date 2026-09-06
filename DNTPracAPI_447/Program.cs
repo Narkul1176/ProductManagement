@@ -6,6 +6,7 @@ using Repository.Implementation;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers();
 builder.Services.AddControllers().AddXmlSerializerFormatters().AddJsonOptions(p =>
 {
     //Camel casing is not enabled in c# model class
